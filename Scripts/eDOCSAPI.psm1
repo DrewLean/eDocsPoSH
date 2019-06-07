@@ -125,57 +125,6 @@ function Add-eDOCSScriptLogEntry {
     Add-Content -LiteralPath $logPath -Value ([DateTime]::Now.ToString() + ' - ' + $msg) -Encoding utf8
 }
 
-function Set-eDOCSProfileEscapeCharacters {
-    <#
-    .SYNOPSIS
-    The eDOCS document profile description/abstract field translates at least
-    \\, \r, \n and \t into line breaks and tabs this function adds an extra \
-    to escape these characters.
-    
-    .DESCRIPTION
-    The eDOCS document profile description/abstract field translates at least
-    \\, \r, \n and \t into line breaks and tabs this function adds an extra \
-    to escape these characters.
-
-    When writing to the eDOCS document profile description/abstract field you
-    should call this function over the data you are writing.
-
-    If you want to write a line break to the description/abstract field then
-    add a line break via "`r`n" or System.String.TextBuilder.AppendLine() into
-    the string you write to this field.
-
-    There may be other special characters that I haven't run into yet, to my
-    knowledge these aren't documented anywhere.
-    
-    .PARAMETER string
-    The string you need to escape before writing to the eDOCS profile
-    description field.
-    
-    .EXAMPLE
-    Set-eDOCSProfileEscapeCharacters "\\cbdfile1\nature\really\is\cool"
-    Would return \\\\cbdfile1\\nature\\really\is\cool
-    
-    .NOTES
-    If you want to write a line break to the description/abstract field then
-    add a line break via "`r`n" or System.String.TextBuilder.AppendLine() into
-    the string you write to this field.
-
-    There may be other special characters that I haven't run into yet, to my
-    knowledge these aren't documented anywhere. 
-    #>
-
-    Param(
-        [parameter(Mandatory = $true, Position = 0)]
-        [String]
-        $string
-    )
-
-    $string = $string -replace '\\\\', '\\\\'
-    $string = $string -replace '\\n', '\\n'
-    $string = $string -replace '\\r', '\\r'
-    $string = $string -replace '\\t', '\\t'
-    $string
-}
 
 function Get-eDOCSLogon {
     <#
